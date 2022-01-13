@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# This script is displaying "Best School" 10 times
+# using C style while loop
+
+I=0
+LIMIT=10
+while((I < LIMIT))
+do
+    echo "Best School"
+    ((I++))
+done
