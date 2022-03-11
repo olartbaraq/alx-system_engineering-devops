@@ -1,4 +1,5 @@
 # execute a command
 
-exec { '/usr/bin/env pkill killmenow':
+exec { 'kill killmenow':
+command => '/usr/bin/env pkill -f killmenow'
 }
