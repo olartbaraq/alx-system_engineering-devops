@@ -3,10 +3,11 @@
 
 sudo apt-get -y update
 sudo apt-get -y install nginx
-sudo ufw enable
+sudo ufw -f enable
 sudo ufw allow 'Nginx HTTP'
-echo 'Hello World!' | sudo tee var/www/html.index.nginx-debian.html
+sudo service nginx start
+echo 'Hello World!' | sudo tee /usr/share/nginx/html/index.html
+sudo service restart nginx
+
 
 # The tee command, used with a pipe, reads standard input, then writes the output of a program to stand# ard output and simultaneously copies it into the specified file or files. Use the tee command to view# your output immediately and at the same time, store it for future use.
-
-sudo service restart nginx
