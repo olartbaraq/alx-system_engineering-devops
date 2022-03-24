@@ -2,19 +2,22 @@
 # display information about domains and sub-domains
 
 
-domain=$1
-print_info() {
-    domain_info=$(dig $1 | grep -A1 'ANSWER SECTION:')
-    record_type=$(echo $domain_info | awk '{print $7}')
-    ip_address=$(echo $domain_info | awk '{print $8}')
-    echo "The subdomain $2 is a $record_type record and points to $ip_address"
-}
-
-if [ ! $2 ]; then
-    sub_domains=("www" "lb-01" "web-01" "web-02")
-    for each_dom in "${sub_domains[@]}"; do
-    	print_info "${each_dom}.${domain}" $each_dom
+if [ "$#" -lt 2 ]
+then
+    for subd in www lb-01 web-01 web-02
+    do
+	dig "$subd.$1" | awk -v subd="$subd" '/ANSWER SECTION:/ {
+	    	       	     		      getline; print "The subdomain",
+                                              subd,"is a",
+                                              $(NF-1),"record and points",
+                                              "to",$NF
+                                             }'
     done
-else
-    print_info "${2}.${domain}" $2
+ else
+    dig "$2.$1" | awk -v subd="$2" '/ANSWER SECTION:/ {
+    		      	 	   	      getline; print "The subdomain",
+                                              subd,"is a",
+                                              $(NF-1),"record and points",
+                                              "to",$NF
+                                             }'
 fi
