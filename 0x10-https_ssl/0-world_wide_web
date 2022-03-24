@@ -2,22 +2,20 @@
 # display information about domains and sub-domains
 
 
-if [ "$#" -lt 2 ]
-then
-    for subd in www lb-01 web-01 web-02
+display_function ()
+{
+    domain="$1"
+    if [ "$2" ]
+    then
+	subdomain="$2"
+    else
+	subdomain="www lb-01 web-01 web-02"
+    fi
+    for sub in $subdomain
     do
-	dig "$subd.$1" | awk -v subd="$subd" '/ANSWER SECTION:/ {
-	    	       	     		      getline; print "The subdomain",
-                                              subd,"is a",
-                                              $(NF-1),"record and points",
-                                              "to",$NF
-                                             }'
+	echo -n "The subdomain $sub"
+	dig $sub.$domain | grep -A1 'ANSWER SECTION:' | tail -n 1 | awk '{print " is a " $4 " record and points to " $5}'
     done
- else
-    dig "$2.$1" | awk -v subd="$2" '/ANSWER SECTION:/ {
-    		      	 	   	      getline; print "The subdomain",
-                                              subd,"is a",
-                                              $(NF-1),"record and points",
-                                              "to",$NF
-                                             }'
-fi
+}
+
+display_function "$1" "$2"
