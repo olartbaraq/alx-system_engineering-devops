@@ -4,8 +4,16 @@
 
 sudo apt-get -y update
 sudo apt-get -y install haproxy
-sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.original
-sudo sed -i "\$ a\listen appname\n\tbind 0.0.0.0:80\n\tmode http\n\tstats enable\n\tbalance roundrobin\n\toption httpcl\
-ose\n\toption forwardfor\n\tserver 1738-web-01 34.75.181.236:80 check\n\tserver 1738-web-02 34.73.98.236:80 check" /etc\
-     /haproxy/haproxy.cfg
-sudo service haproxy start
+sudo chmod 777 /etc/haproxy/haproxy.cfg
+echo '
+frontend http_front
+	 bind *:80
+	 stats uri /haproxy?stats
+	 default_backend http_back
+backend http_back
+	balance roundrobin
+	server 1738-web-01 34.75.181.236:80 check
+	server 1738-web-02 34.73.98.236:80 check' >> /etc/haproxy/haproxy.cfg
+sudo chmod 777 /etc/default/haproxy
+echo 'ENABLED=1' >> /etc/default/haproxy
+sudo service haproxy restart
