@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# display information about domain and sub-domains
+# display information about domain and sub-domains which points to an address
 
 
 display_function ()
