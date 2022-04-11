@@ -3,10 +3,10 @@
 
 if __name__ == "__main__":
 
-    import json
-    import requests
     import sys
-
+    import requests
+    import json
+    
     employee_id = int(sys.argv[1])
     emp_data = ("https://jsonplaceholder.typicode.com/users/{}".
                 format(employee_id))
