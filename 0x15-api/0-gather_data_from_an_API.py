@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ necessary mudules to import"""
-import json
-import requests
-import sys
 
 if __name__ == "__main__":
+    import json
+    import requests
+    import sys
+    
     employee_id = int(sys.argv[1])
     employee_todo = requests.get("https://jsonplaceholder.typicode.com/todos")
     todos = json.loads(employee_todo.text)
