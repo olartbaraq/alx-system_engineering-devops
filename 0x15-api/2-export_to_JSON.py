@@ -14,7 +14,7 @@ if __name__ == "__main__":
     emp_name = requests.get(emp_data)
     names = json.loads(emp_name.text)
     name = names['name']
-    #user_name = names['username']
+    # user_name = names['username']
     employee_todo = requests.get("https://jsonplaceholder.typicode.com/todos")
     todos = json.loads(employee_todo.text)
 
