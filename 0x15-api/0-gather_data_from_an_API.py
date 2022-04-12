@@ -4,8 +4,9 @@
 if __name__ == "__main__":
 
     import json
-    import requests
     import sys
+    import requests
+
 
     employee_id = int(sys.argv[1])
     emp_data = ("https://jsonplaceholder.typicode.com/users/{}".
